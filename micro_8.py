@@ -5,33 +5,45 @@ con transiciones estacionarias y número de estados finitos dado
 un estado inicial, muestre los diferentes estados hasta la 
 generación del estado en el paso k.
 """
+import pprint
 import numpy as np
-import random as rm
+pp = pprint.PrettyPrinter(indent=4)
 
 def markovChain(n):
 	print('empieza cadena markov')
 
-	# Estados del informatico
-	states = ["Eat","Sleep","Code", "Repeat"]
+	#Estado inicial
+	print('#-----------------------------------------#')
+	print('Estado inicial')
+	I = np.matrix([[1.0, 0.0,0.0,0.0]])
+	pp.pprint(I)
 
-	# Possible sequences of events
-	transitionName = [
-		["EE","ES","EC","ER"],
-		["SE","SS","SC","SR"],
-		["CE","CS","CC","CR"],
-		["RE","RS","RC","RR"]
-	]
+	print('#-----------------------------------------#')
+	#Probabilidad
+	print('Probabilidad transicion')
+	T = np.matrix([
+		[0.1, 0.2, 0.3, 0.4],
+		[0.3, 0.3, 0.3, 0.1],
+		[0.4, 0.2, 0.2, 0.2],
+		[0.7, 0.1, 0.1, 0.1]
+       	])
+	pp.pprint(T)
+	print('#-----------------------------------------#')
 
-	# Probabilities matrix (transition matrix)
-	transitionMatrix = [
-		[0.2,0.6,0.2],
-		[0.1,0.6,0.3],
-		[0.1,0.6,0.3],
-		[0.2,0.7,0.1]
-	]
 
+	for i in range(n):
+		print('corrida: ', i)
+		if i == 0:
+			T_new = I * T
+		else:
+			T_new = T_new * T
+
+		#print(T_new)
+	
+
+	print(T_new)
 
 	print('termina cadena markov')
 
 
-markovChain(10)
+markovChain(n = 10)
