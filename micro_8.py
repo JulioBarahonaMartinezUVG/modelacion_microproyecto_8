@@ -7,6 +7,9 @@ generación del estado en el paso k.
 """
 import pprint
 import numpy as np
+import math
+import random
+
 pp = pprint.PrettyPrinter(indent=4)
 
 def multMatrices(X,Y):
@@ -17,6 +20,12 @@ def multMatrices(X,Y):
 	           result[i][j] += X[i][k] * Y[k][j]
 
 	print(result)
+
+def exponential(x):
+    time =  np.log(np.random.uniform()) *-1
+
+    return time/x
+
 
 def markovChain(n):
 	print('empieza cadena markov')
@@ -113,3 +122,22 @@ def hist_plot(array):
 x = metropolis(10000)
 
 hist_plot(x)    
+
+def gibbs(limit, ini, mu, lamd):
+	x = []
+	h = []
+
+	x.append(ini)
+
+	for i in range(limit):
+		value = exponential(lamd)
+		h.append(value)
+
+		x.append(np.random.normal(loc=mu, scale=1/math.sqrt(1*h[i])))
+
+	dictionary = {"x": x, "h": h}
+
+
+	return dictionary
+
+gibbs(10000, 0.45, 0.5, 1)
